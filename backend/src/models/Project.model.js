@@ -23,8 +23,8 @@ const projectSchema = new mongoose.Schema(
             },
             role: {
                 type: String,
-                enum: ["Manager","Member","Viewer"],
-                default: "Member"
+                enum: ["Manager","Developer","Viewer"],
+                default: "Developer"
             }
         }]
     },
