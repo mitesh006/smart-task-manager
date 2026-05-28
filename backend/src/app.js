@@ -2,7 +2,8 @@ import express from "express"
 import cookieParser from 'cookie-parser'
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/auth.route.js"
-
+import projectRoutes from "./routes/project.route.js"
+import taskRoutes from "./routes/task.routes.js"
 const app = express()
 
 app.use(express.json())
@@ -15,5 +16,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/auth', authRoutes)
+app.use('/api/projects', projectRoutes)
+app.use('/api/tasks', taskRoutes)
 
 export default app;

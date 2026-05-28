@@ -1,6 +1,6 @@
 import User from "../models/User.model.js"
 import generateTokenAndSetCookie from "../utils/genToken.js"
-const register = async (req, res) => {
+export const register = async (req, res) => {
     
     const {name, email, password} = req.body
     
@@ -35,7 +35,7 @@ const register = async (req, res) => {
 }
 
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
     const {email, password} = req.body
     
     try {
@@ -72,7 +72,7 @@ const login = async (req, res) => {
     }
 }
 
-const logout = async (req, res) => {
+export const logout = async (req, res) => {
 
     res.clearCookie('token')
 
@@ -82,11 +82,8 @@ const logout = async (req, res) => {
 
 }
 
-const me = async (req, res) => {
+export const me = async (req, res) => {
     return res.status(200).json({
         user: req.user
     })
 }
-
-export {register, login, logout, me}
-export {register, login}
