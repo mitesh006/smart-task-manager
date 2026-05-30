@@ -23,7 +23,7 @@ const projectSchema = new mongoose.Schema(
             },
             role: {
                 type: String,
-                enum: ["Manager","Developer","Viewer"],
+                enum: ["Manager", "Developer", "Viewer"],
                 default: "Developer"
             }
         }]
@@ -33,6 +33,6 @@ const projectSchema = new mongoose.Schema(
     }
 )
 
-const Project = mongoose.model('Project',projectSchema)
+const Project = mongoose.model('Project', projectSchema)
 
 export default Project
