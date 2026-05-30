@@ -6,7 +6,7 @@ const protectRoute = async (req, res, next) => {
     try {
         const token = req.cookies.token
 
-        if(!token) {
+        if (!token) {
             return res.status(401).json({
                 message: "Unauthorized access. Please log in."
             })
@@ -14,7 +14,7 @@ const protectRoute = async (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-        if(!decoded) {
+        if (!decoded) {
             return res.status(401).json({
                 message: "Unauthorized access. Corrupt token."
             })
@@ -22,7 +22,7 @@ const protectRoute = async (req, res, next) => {
 
         const user = await User.findById(decoded.id)
 
-        if(!user) {
+        if (!user) {
             return res.status(404).json({
                 message: "User no longer exist."
             })
@@ -31,7 +31,7 @@ const protectRoute = async (req, res, next) => {
         req.user = user
         next()
 
-    } catch (error) {  
+    } catch (error) {
         return res.status(500).json({
             message: "Internal Server Error. : " + error
         })

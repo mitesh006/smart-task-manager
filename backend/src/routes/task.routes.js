@@ -7,6 +7,6 @@ const router = express.Router()
 
 router.post('/', protectRoute, createTask)
 router.put('/:id', protectRoute, updateTask)
-router.delete('/"id', protectRoute, deleteTask)
+router.delete('/:id', protectRoute, deleteTask)
 
 export default router

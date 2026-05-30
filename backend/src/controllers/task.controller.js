@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import Project from "../models/Project.model.js"
 import Task from "../models/Task.model.js"
 import User from "../models/User.model.js"
@@ -99,7 +100,8 @@ export const updateTask = async (req, res) => {
 
     try {
 
-        const task = await Task.findById(id)
+        const taskId = new mongoose.Types.ObjectId(id)
+        const task = await Task.findById(taskId)
 
         if (!task) {
             return res.status(404).json({
@@ -142,7 +144,7 @@ export const updateTask = async (req, res) => {
         }
 
         const updatedTask = await Task.findByIdAndUpdate(
-            id,
+            taskId,
             { $set: req.body },
             { new: true, runValidators: true }
         )
@@ -169,58 +171,69 @@ export const updateTask = async (req, res) => {
 }
 
 // @desc    Delete a task from project workspace
-// @route   DELETE /api/tasks
+// @route   DELETE /api/tasks/:id
 // @access  Private
 
 //Only project manager, task owner and task assignee can DELETE tasks.
 
 export const deleteTask = async (req, res) => {
-
+    
     const { id } = req.params
-
+    
     try {
-
-        const task = await Task.findById(id)
-
+        
+        const taskId = new mongoose.Types.ObjectId(id)
+        const task = await Task.findById(taskId)
+        
         if (!task) {
             return res.status(404).json({
                 message: "Task not found."
             })
         }
-
+        
         const parentProject = await Project.findById(task.project)
-
+        
         const actorContext = await parentProject.members.find(
             (m) => m.user.toString() === req.user._id.toString()
         )
-
+        
         if (!actorContext) {
             return res.status(403).json({
                 message: "Access Denied: You are not a member of this project workspace."
             })
         }
-
+        
         const isManager = actorContext.role === "Manager"
         const isOwner = task.owner.toString() === req.user._id.toString()
-        const isAssignedToMe = task.assignedTo.toString() === req.user._id.toString()
-
+        const isAssignedToMe = task.assignedTo?.toString() === req.user._id.toString()
+        
         if (!isManager && !isOwner && !isAssignedToMe) {
             return res.status(403).json({
                 message: "Access Denied: You are not authorized to delete this task."
             })
         }
-
-        await Task.findByIdAndDelete(id)
-
-        return
-
+        
+        await Task.findByIdAndDelete(taskId)
+        
+        return res.status(200).json({
+            message: "Task deleted successfully."
+        })
+        
     } catch (error) {
-
+        
         if (error.name === 'ValidationError') {
             return res.status(400).json({
                 message: Object.values(error.errors)[0].message
             })
         }
-
+        
+        if (error.kind === "ObjectId") {
+            return res.status(400).json({ message: "Invalid project identifier format." });
+        }
+        
+        return res.status(500).json({
+            message: "Internal Server Error."
+        })
+        
     }
 }

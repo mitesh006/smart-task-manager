@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import Project from "../models/Project.model.js"
 import Task from "../models/Task.model.js"
 import User from "../models/User.model.js"
@@ -86,7 +87,9 @@ export const getProject = async (req, res) => {
 
     try {
 
-        const project = await Project.findById(id)
+        const projectId = new mongoose.Types.ObjectId(id)
+
+        const project = await Project.findById(projectId)
             .populate("owner", "name email")
             .populate("members.user", "name email");
 
@@ -106,11 +109,12 @@ export const getProject = async (req, res) => {
             })
         }
 
-        const tasks = await Task.find({ project: id })
+        const tasks = await Task.find({ project: projectId })
             .populate("assignedTo", "name email")
 
         return res.status(200).json({
             project,
+            taskCount: tasks.length,
             tasks
         })
 
@@ -140,13 +144,15 @@ export const addMember = async (req, res) => {
     const { email, role } = req.body
     try {
 
+        const projectId = new mongoose.Types.ObjectId(id)
+
         if (!email) {
             return res.status(400).json({
                 message: "Invitee email address is required."
             })
         }
 
-        const project = await Project.findById(id)
+        const project = await Project.findById(projectId)
 
         if (!project) {
             return res.status(404).json({
@@ -223,7 +229,9 @@ export const updateProject = async (req, res) => {
 
     try {
 
-        const project = await Project.findById(id)
+        const projectId = new mongoose.Types.ObjectId(id)
+
+        const project = await Project.findById(projectId)
 
         if (!project) {
             return res.status(404).json({
@@ -243,7 +251,7 @@ export const updateProject = async (req, res) => {
         }
 
         const updatedProject = await Project.findByIdAndUpdate(
-            id,
+            projectId,
             { $set: req.body },
             { new: true, runValidators: true }
         )
@@ -283,7 +291,9 @@ export const removeMember = async (req, res) => {
 
     try {
 
-        const project = await Project.findById(id)
+        const projectId = new mongoose.Types.ObjectId(id)
+
+        const project = await Project.findById(projectId)
 
         if (!project) {
             return res.status(404).json({
@@ -395,7 +405,9 @@ export const deleteProject = async (req, res) => {
 
     try {
 
-        const project = await Project.findById(id)
+        const projectId = new mongoose.Types.ObjectId(id)
+
+        const project = await Project.findById(projectId)
 
         if (!project) {
             return res.status(404).json({
@@ -413,9 +425,9 @@ export const deleteProject = async (req, res) => {
             });
         }
 
-        await Task.deleteMany({ project: id })
+        await Task.deleteMany({ project: projectId })
 
-        await Project.findByIdAndDelete(id)
+        await Project.findByIdAndDelete(projectId)
 
         return res.status(200).json({
             message: "Project workspace and all associated tasks have been permanently deleted."
@@ -446,7 +458,9 @@ export const updateMembersRole = async (req, res) => {
 
     try {
 
-        const project = await Project.findById(id)
+        const projectId = new mongoose.Types.ObjectId(id)
+
+        const project = await Project.findById(projectId)
 
         if (!project) {
             return res.status(404).json({
@@ -521,7 +535,9 @@ export const transferOwnership = async (req, res) => {
 
     try {
 
-        const project = await Project.findById(id)
+        const projectId = new mongoose.Types.ObjectId(id)
+
+        const project = await Project.findById(projectId)
 
         if (!project) {
             return res.status(404).json({
@@ -577,4 +593,100 @@ export const transferOwnership = async (req, res) => {
 
     }
 
-} 
+}
+
+
+// @ desc
+// @ route GET /api/projects/:id/metrics
+// @ access Private
+
+export const projectMetrics = async (req, res) => {
+
+    const { id } = req.params
+
+    try {
+
+        const projectId = new mongoose.Types.ObjectId(id)
+
+        const metrics = await Task.aggregate([
+
+            {
+                $match: { project: projectId }
+            },
+
+            {
+                $facet: {
+                    statusCounts: [
+                        {
+                            $group: {
+                                _id: "$status",
+                                count: { $count: {} }
+                            }
+                        }
+                    ],
+                    priorityCounts: [
+                        {
+                            $group: {
+                                _id: "$priority",
+                                count: { $count: {} }
+                            }
+                        }
+                    ],
+                    overDueCounts: [
+                        {
+                            $match: {
+                                dueDate: { $lt: new Date() },
+                                status: { $ne: "Done" }
+                            }
+                        },
+                        {
+                            $count: "count"
+                        }
+                    ],
+                    memberWorkloads: [
+                        {
+                            $group: {
+                                _id: "$assignedTo",
+                                taskCount: { $sum: 1 }
+                            }
+                        },
+                        {
+                            $lookup: {
+                                from: "users",
+                                localField: "_id",
+                                foreignField: "_id",
+                                as: "memberDetails"
+                            }
+                        },
+                        {
+                            $unwind: "$memberDetails"
+                        },
+                        {
+                            $project: {
+                                _id: 1,
+                                taskCount: 1,
+                                name: "$memberDetails.name",
+                                email: "$memberDetails.email"
+                            }
+                        }
+                    ]
+                }
+            }
+        ])
+
+        return res.status(200).json({
+            data: metrics[0]
+        })
+
+    } catch (error) {
+
+        if (error.kind === "ObjectId") {
+            return res.status(400).json({ message: "Invalid project identifier format." });
+        }
+
+        return res.status(500).json({
+            message: "Internal Server Error." + error
+        })
+
+    }
+}
