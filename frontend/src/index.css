@@ -454,6 +454,33 @@
   box-shadow: 0 0 0 3px rgba(201, 165, 92, 0.08);
 }
 
+/* ── OTP Input ── */
+.otp-input {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Outfit', monospace;
+  color: var(--color-gold);
+  background: rgba(201, 165, 92, 0.04);
+  border: 1px solid rgba(201, 165, 92, 0.12);
+  border-radius: 10px;
+  outline: none;
+  caret-color: var(--color-gold);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.otp-input:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(201, 165, 92, 0.1);
+  background: rgba(201, 165, 92, 0.06);
+}
+
+.otp-input::placeholder {
+  color: rgba(201, 165, 92, 0.2);
+}
+
 /* ── Modal Overlay ── */
 .modal-overlay {
   position: fixed;
