@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import ProjectBoard from './pages/ProjectBoard'
 import Landing from './pages/Landing'
 import Team from './pages/Team'
+import Settings from './pages/Settings'
 import ProtectedRoute from './components/ProtectedRoute'
 
 import LoadingScreen from './components/LoadingScreen'
@@ -69,13 +70,7 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <AppLayout>
-              <div className="p-10 flex items-center justify-center min-h-[60vh]">
-                <div className="text-center">
-                  <h2 className="text-2xl font-heading font-bold text-mist-100 mb-2">Settings</h2>
-                  <p className="text-mist-500 text-sm">Coming Soon</p>
-                  <div className="mt-4 h-[1px] w-16 mx-auto bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
-                </div>
-              </div>
+              <Settings />
             </AppLayout>
           </ProtectedRoute>
         }
@@ -86,6 +81,13 @@ function AppRoutes() {
 
 function App() {
   const [showLoading, setShowLoading] = useState(true)
+
+  useEffect(() => {
+    const theme = localStorage.getItem('theme')
+    if (theme === 'light') {
+      document.documentElement.classList.add('light-theme')
+    }
+  }, [])
 
   return (
     <BrowserRouter>
