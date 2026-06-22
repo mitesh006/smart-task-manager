@@ -5,24 +5,43 @@
    Dark luxury aesthetic with gold accents
    ═══════════════════════════════════════════════════════════════ */
 
+:root {
+  --theme-void: #050508;
+  --theme-obsidian: #0a0a0f;
+  --theme-onyx: #111118;
+  --theme-charcoal: #1a1a24;
+  --theme-slate-dark: #23232f;
+
+  --theme-mist-50: #f8f8fa;
+  --theme-mist-100: #e8e8ed;
+  --theme-mist-200: #d1d1da;
+  --theme-mist-300: #a9a9b8;
+  --theme-mist-400: #7c7c90;
+  --theme-mist-500: #5a5a6e;
+  --theme-mist-600: #43434f;
+  --theme-mist-700: #2e2e38;
+  --theme-mist-800: #1e1e26;
+  --theme-mist-900: #14141a;
+}
+
 @theme {
   /* ── Color Palette ── */
-  --color-void: #050508;
-  --color-obsidian: #0a0a0f;
-  --color-onyx: #111118;
-  --color-charcoal: #1a1a24;
-  --color-slate-dark: #23232f;
+  --color-void: var(--theme-void);
+  --color-obsidian: var(--theme-obsidian);
+  --color-onyx: var(--theme-onyx);
+  --color-charcoal: var(--theme-charcoal);
+  --color-slate-dark: var(--theme-slate-dark);
 
-  --color-mist-50: #f8f8fa;
-  --color-mist-100: #e8e8ed;
-  --color-mist-200: #d1d1da;
-  --color-mist-300: #a9a9b8;
-  --color-mist-400: #7c7c90;
-  --color-mist-500: #5a5a6e;
-  --color-mist-600: #43434f;
-  --color-mist-700: #2e2e38;
-  --color-mist-800: #1e1e26;
-  --color-mist-900: #14141a;
+  --color-mist-50: var(--theme-mist-50);
+  --color-mist-100: var(--theme-mist-100);
+  --color-mist-200: var(--theme-mist-200);
+  --color-mist-300: var(--theme-mist-300);
+  --color-mist-400: var(--theme-mist-400);
+  --color-mist-500: var(--theme-mist-500);
+  --color-mist-600: var(--theme-mist-600);
+  --color-mist-700: var(--theme-mist-700);
+  --color-mist-800: var(--theme-mist-800);
+  --color-mist-900: var(--theme-mist-900);
 
   --color-gold: #c9a55c;
   --color-gold-light: #e8c472;
@@ -36,6 +55,11 @@
   --color-sapphire: #6366f1;
   --color-sapphire-dim: #312e81;
   --color-amber: #f59e0b;
+
+  /* ── Glass Backgrounds ── */
+  --bg-glass: rgba(10, 10, 15, 0.6);
+  --bg-glass-strong: rgba(10, 10, 15, 0.85);
+  --bg-glass-card: rgba(17, 17, 24, 0.7);
 
   /* ── Typography ── */
   --font-heading: "Outfit", sans-serif;
@@ -202,21 +226,21 @@
 @layer utilities {
   /* ── Glass Effects ── */
   .glass {
-    background: rgba(10, 10, 15, 0.6);
+    background: var(--bg-glass);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(201, 165, 92, 0.08);
   }
 
   .glass-strong {
-    background: rgba(10, 10, 15, 0.85);
+    background: var(--bg-glass-strong);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
     border: 1px solid rgba(201, 165, 92, 0.12);
   }
 
   .glass-card {
-    background: rgba(17, 17, 24, 0.7);
+    background: var(--bg-glass-card);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(201, 165, 92, 0.06);
@@ -629,4 +653,35 @@
    RESPONSIVE HELPERS
    ═══════════════════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT THEME OVERRIDES
+   ═══════════════════════════════════════════════════════════════ */
 
+.light-theme {
+  --theme-void: #f9f9fb;
+  --theme-obsidian: #f3f3f6;
+  --theme-onyx: #ebebf0;
+  --theme-charcoal: #e1e1e8;
+  --theme-slate-dark: #d5d5df;
+
+  --theme-mist-50: #14141a;
+  --theme-mist-100: #1e1e26;
+  --theme-mist-200: #2e2e38;
+  --theme-mist-300: #43434f;
+  --theme-mist-400: #5a5a6e;
+  --theme-mist-500: #7c7c90;
+  --theme-mist-600: #a9a9b8;
+  --theme-mist-700: #d1d1da;
+  --theme-mist-800: #e8e8ed;
+  --theme-mist-900: #f8f8fa;
+
+  --color-gold: #b38b3a;
+  --color-gold-light: #c9a55c;
+  --color-gold-dim: #cca863;
+  --color-gold-glow: #b38b3a1a;
+
+  /* ── Glass Backgrounds Light ── */
+  --bg-glass: rgba(255, 255, 255, 0.8);
+  --bg-glass-strong: rgba(255, 255, 255, 0.95);
+  --bg-glass-card: rgba(245, 245, 245, 0.8);
+}
