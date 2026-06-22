@@ -2,6 +2,8 @@ import mongoose from "mongoose"
 import Project from "../models/Project.model.js"
 import Task from "../models/Task.model.js"
 import User from "../models/User.model.js"
+import { sendMail } from "../utils/mailer.js"
+import { taskAssignmentTemplate } from "../utils/emailTemplates.js"
 
 
 // @desc    Create a new task inside project workspace
@@ -64,6 +66,22 @@ export const createTask = async (req, res) => {
         })
 
         await task.save()
+
+        // Send email if assigned
+        if (req.body.assignedTo) {
+            try {
+                const assignee = await User.findById(req.body.assignedTo)
+                if (assignee) {
+                    await sendMail(
+                        assignee.email,
+                        `New Task Assigned: ${title}`,
+                        taskAssignmentTemplate(title, parentProject.name, req.body.dueDate)
+                    )
+                }
+            } catch (err) {
+                console.error("Failed to send task assignment email:", err)
+            }
+        }
 
         return res.status(201).json({
             message: "Task created successfully inside workspace."
@@ -148,6 +166,22 @@ export const updateTask = async (req, res) => {
             { $set: req.body },
             { new: true, runValidators: true }
         )
+
+        // Send email if newly assigned to someone else
+        if (req.body.assignedTo && req.body.assignedTo !== task.assignedTo?.toString()) {
+            try {
+                const assignee = await User.findById(req.body.assignedTo)
+                if (assignee) {
+                    await sendMail(
+                        assignee.email,
+                        `New Task Assigned: ${updatedTask.title}`,
+                        taskAssignmentTemplate(updatedTask.title, parentProject.name, updatedTask.dueDate)
+                    )
+                }
+            } catch (err) {
+                console.error("Failed to send task assignment email:", err)
+            }
+        }
 
         return res.status(200).json({
             message: "Task updated successfully inside workspace."

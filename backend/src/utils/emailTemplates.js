@@ -196,3 +196,208 @@ export const welcomeEmailTemplate = (name) => {
 </body>
 </html>`
 }
+
+/**
+ * Project Invitation email
+ */
+export const projectInviteTemplate = (projectName, managerName) => {
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="${baseStyles.body}">
+  <div style="${baseStyles.container}">
+    <div style="${baseStyles.card}">
+      <!-- Logo -->
+      <div style="${baseStyles.logo}">
+        <span style="${baseStyles.logoText}">T</span>
+      </div>
+
+      <!-- Gold accent line -->
+      <hr style="${baseStyles.goldLine}" />
+
+      <!-- Heading -->
+      <h1 style="${baseStyles.h1}">
+        Project <span style="${baseStyles.h1Gold}">Invitation</span>
+      </h1>
+      <p style="${baseStyles.subtitle}">
+        You have been added to a new project workspace.
+      </p>
+
+      <!-- Details -->
+      <div style="background:rgba(201,165,92,0.04); border:1px solid rgba(201,165,92,0.12); border-radius:12px; padding:24px; margin-bottom:32px;">
+        <p style="color:#8a8a99; font-size:11px; text-transform:uppercase; letter-spacing:1px; margin:0 0 4px 0;">Project Name</p>
+        <p style="color:#f0eee6; font-size:18px; font-weight:600; margin:0 0 16px 0;">${projectName}</p>
+        
+        <p style="color:#8a8a99; font-size:11px; text-transform:uppercase; letter-spacing:1px; margin:0 0 4px 0;">Added By</p>
+        <p style="color:#d0cec6; font-size:14px; margin:0;">${managerName}</p>
+      </div>
+
+      <!-- CTA Button -->
+      <table cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto;">
+        <tr>
+          <td style="background:linear-gradient(135deg, #c9a55c 0%, #a8884a 100%); border-radius:8px; padding:12px 32px;">
+            <a href="${process.env.FRONTEND_URL || 'http://localhost:5173'}/projects" style="color:#050508; text-decoration:none; font-size:13px; font-weight:600; letter-spacing:0.5px; display:inline-block;">
+              View Project Workspace →
+            </a>
+          </td>
+        </tr>
+      </table>
+
+      <hr style="${baseStyles.divider}" />
+
+      <!-- Footer inside card -->
+      <p style="color:#4a4a5a; font-size:10px; text-align:center; margin:0; letter-spacing:0.3px; text-transform:uppercase;">
+        TaskFlow — Smart Team Management
+      </p>
+    </div>
+
+    <!-- Outer footer -->
+    <div style="${baseStyles.footer}">
+      <p style="${baseStyles.footerText}">
+        © ${new Date().getFullYear()} TaskFlow. Engineered for excellence.
+      </p>
+    </div>
+  </div>
+</body>
+</html>`
+}
+
+/**
+ * Task Assignment email
+ */
+export const taskAssignmentTemplate = (taskTitle, projectName, dueDate) => {
+  const formattedDate = dueDate ? new Date(dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'No due date';
+  
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="${baseStyles.body}">
+  <div style="${baseStyles.container}">
+    <div style="${baseStyles.card}">
+      <!-- Logo -->
+      <div style="${baseStyles.logo}">
+        <span style="${baseStyles.logoText}">T</span>
+      </div>
+
+      <!-- Gold accent line -->
+      <hr style="${baseStyles.goldLine}" />
+
+      <!-- Heading -->
+      <h1 style="${baseStyles.h1}">
+        New Task <span style="${baseStyles.h1Gold}">Assigned</span>
+      </h1>
+      <p style="${baseStyles.subtitle}">
+        A new task has been assigned to you in TaskFlow.
+      </p>
+
+      <!-- Details -->
+      <div style="background:rgba(201,165,92,0.04); border:1px solid rgba(201,165,92,0.12); border-radius:12px; padding:24px; margin-bottom:32px;">
+        <p style="color:#8a8a99; font-size:11px; text-transform:uppercase; letter-spacing:1px; margin:0 0 4px 0;">Task Title</p>
+        <p style="color:#f0eee6; font-size:18px; font-weight:600; margin:0 0 16px 0;">${taskTitle}</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td width="50%">
+              <p style="color:#8a8a99; font-size:11px; text-transform:uppercase; letter-spacing:1px; margin:0 0 4px 0;">Project</p>
+              <p style="color:#d0cec6; font-size:13px; margin:0;">${projectName}</p>
+            </td>
+            <td width="50%">
+              <p style="color:#8a8a99; font-size:11px; text-transform:uppercase; letter-spacing:1px; margin:0 0 4px 0;">Due Date</p>
+              <p style="color:#c9a55c; font-size:13px; margin:0; font-weight:500;">${formattedDate}</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- CTA Button -->
+      <table cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto;">
+        <tr>
+          <td style="background:linear-gradient(135deg, #c9a55c 0%, #a8884a 100%); border-radius:8px; padding:12px 32px;">
+            <a href="${process.env.FRONTEND_URL || 'http://localhost:5173'}/projects" style="color:#050508; text-decoration:none; font-size:13px; font-weight:600; letter-spacing:0.5px; display:inline-block;">
+              View Task Board →
+            </a>
+          </td>
+        </tr>
+      </table>
+
+      <hr style="${baseStyles.divider}" />
+
+      <!-- Footer inside card -->
+      <p style="color:#4a4a5a; font-size:10px; text-align:center; margin:0; letter-spacing:0.3px; text-transform:uppercase;">
+        TaskFlow — Smart Team Management
+      </p>
+    </div>
+
+    <!-- Outer footer -->
+    <div style="${baseStyles.footer}">
+      <p style="${baseStyles.footerText}">
+        © ${new Date().getFullYear()} TaskFlow. Engineered for excellence.
+      </p>
+    </div>
+  </div>
+</body>
+</html>`
+}
+
+export const dueDateAlertTemplate = (taskTitle, projectName, dueDate) => {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Due Soon Alert</title>
+</head>
+<body style="${baseStyles.body}">
+  <div style="${baseStyles.container}">
+    
+    <div style="${baseStyles.card}">
+      
+      <!-- Top Accent / Logo area -->
+      <div style="${baseStyles.logo}">
+        <span style="${baseStyles.logoText}">T</span>
+      </div>
+      <hr style="height:1px; width:48px; background:linear-gradient(90deg, #f43f5e, transparent); margin:0 0 24px 0; border:none;" />
+
+      <!-- Main Content -->
+      <h1 style="${baseStyles.h1}">Action <span style="color:#f43f5e;">Required</span></h1>
+      <p style="${baseStyles.subtitle}">A task assigned to you is due in less than 24 hours.</p>
+
+      <!-- Details Block -->
+      <div style="background:rgba(244,63,94,0.03); border:1px solid rgba(244,63,94,0.1); border-radius:12px; padding:24px; margin-bottom:32px;">
+        <h3 style="color:#d1d1da; font-size:16px; font-weight:600; margin:0 0 8px 0;">${taskTitle}</h3>
+        <p style="color:#8a8a99; font-size:13px; margin:0 0 16px 0;">Project: <strong style="color:#f0eee6; font-weight:500;">${projectName}</strong></p>
+        
+        <div style="display:inline-block; background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.2); padding:6px 12px; border-radius:6px;">
+          <span style="color:#f43f5e; font-size:12px; font-weight:600;">DUE: ${new Date(dueDate).toLocaleString()}</span>
+        </div>
+      </div>
+
+      <p style="color:#8a8a99; font-size:14px; margin:0 0 32px 0; line-height:1.6;">
+        Please log in to TaskFlow to complete this task or update its status.
+      </p>
+
+      <!-- CTA Button -->
+      <a href="${process.env.FRONTEND_URL || 'http://localhost:5173'}/projects" style="display:inline-block; background:linear-gradient(135deg, #f43f5e, #be123c); color:#ffffff; font-weight:600; font-size:13px; letter-spacing:0.5px; text-decoration:none; padding:12px 28px; border-radius:8px; box-shadow:0 4px 20px rgba(244,63,94,0.25);">
+        VIEW PROJECT
+      </a>
+
+      <hr style="${baseStyles.divider}" />
+
+      <!-- Footer Context -->
+      <p style="color:#4a4a5a; font-size:12px; margin:0; line-height:1.5;">
+        This is an automated alert generated by the TaskFlow system.
+      </p>
+    </div>
+
+    <!-- Outer footer -->
+    <div style="${baseStyles.footer}">
+      <p style="${baseStyles.footerText}">
+        © ${new Date().getFullYear()} TaskFlow. Engineered for excellence.
+      </p>
+    </div>
+  </div>
+</body>
+</html>`
+}
