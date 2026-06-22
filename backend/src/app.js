@@ -12,6 +12,7 @@ const app = express()
 app.use(cors({
     origin:[
         'http://localhost:5173',
+        'https://task-flow-pink-alpha.vercel.app'
     ],
     credentials: true
 }))
