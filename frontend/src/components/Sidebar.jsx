@@ -31,13 +31,9 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-screen z-50 flex flex-col transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+      className={`fixed top-0 left-0 h-screen z-50 flex flex-col bg-obsidian border-r border-mist-800 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
         expanded ? 'w-56' : 'w-[72px]'
       }`}
-      style={{
-        background: 'linear-gradient(180deg, rgba(10,10,15,0.95) 0%, rgba(5,5,8,0.98) 100%)',
-        borderRight: '1px solid rgba(201,165,92,0.06)',
-      }}
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}
     >

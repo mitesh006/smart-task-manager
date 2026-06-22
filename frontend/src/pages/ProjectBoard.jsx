@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import API from '../api/client'
 import { useToast } from '../components/Toast'
+import ConfirmDialog from '../components/ConfirmDialog'
 import gsap from 'gsap'
 import {
   Plus,
@@ -290,6 +291,14 @@ export default function ProjectBoard() {
   const [showEditTask, setShowEditTask] = useState(false)
   const [showAddMember, setShowAddMember] = useState(false)
   const [editingTask, setEditingTask] = useState(null)
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    confirmText: 'Confirm',
+    isDestructive: true,
+    onConfirm: () => {}
+  })
 
   // Form states
   const [projectForm, setProjectForm] = useState({ name: '', description: '' })
@@ -378,15 +387,23 @@ export default function ProjectBoard() {
     }
   }
 
-  const handleDeleteProject = async (id) => {
-    if (!confirm('Delete this project? This action cannot be undone.')) return
-    try {
-      await API.delete(`/projects/${id}`)
-      toast.success('Project deleted successfully')
-      fetchProjects()
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to delete project')
-    }
+  const handleDeleteProject = (id) => {
+    setConfirmDialog({
+      isOpen: true,
+      title: 'Delete Project',
+      message: 'Are you sure you want to delete this project? This action cannot be undone.',
+      confirmText: 'Delete Project',
+      isDestructive: true,
+      onConfirm: async () => {
+        try {
+          await API.delete(`/projects/${id}`)
+          toast.success('Project deleted successfully')
+          fetchProjects()
+        } catch (err) {
+          toast.error(err.response?.data?.message || 'Failed to delete project')
+        }
+      }
+    })
   }
 
   const handleCreateTask = async (e) => {
@@ -429,14 +446,23 @@ export default function ProjectBoard() {
     }
   }
 
-  const handleDeleteTask = async (id) => {
-    try {
-      await API.delete(`/tasks/${id}`)
-      toast.success('Task deleted')
-      fetchProject()
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to delete task')
-    }
+  const handleDeleteTask = (id) => {
+    setConfirmDialog({
+      isOpen: true,
+      title: 'Delete Task',
+      message: 'Are you sure you want to delete this task? This action cannot be undone.',
+      confirmText: 'Delete Task',
+      isDestructive: true,
+      onConfirm: async () => {
+        try {
+          await API.delete(`/tasks/${id}`)
+          toast.success('Task deleted')
+          fetchProject()
+        } catch (err) {
+          toast.error(err.response?.data?.message || 'Failed to delete task')
+        }
+      }
+    })
   }
 
   const openEditTask = (task) => {
@@ -470,14 +496,23 @@ export default function ProjectBoard() {
     }
   }
 
-  const handleRemoveMember = async (userId) => {
-    try {
-      const res = await API.delete(`/projects/${projectID}/members`, { data: { targetUserId: userId } })
-      toast.success(res.data?.message || 'Member removed successfully')
-      fetchProject()
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to remove member')
-    }
+  const handleRemoveMember = (userId) => {
+    setConfirmDialog({
+      isOpen: true,
+      title: 'Remove Member',
+      message: 'Are you sure you want to remove this member from the project?',
+      confirmText: 'Remove Member',
+      isDestructive: true,
+      onConfirm: async () => {
+        try {
+          const res = await API.delete(`/projects/${projectID}/members`, { data: { targetUserId: userId } })
+          toast.success(res.data?.message || 'Member removed successfully')
+          fetchProject()
+        } catch (err) {
+          toast.error(err.response?.data?.message || 'Failed to remove member')
+        }
+      }
+    })
   }
 
   // ── Drag & Drop handler ──
@@ -764,6 +799,11 @@ export default function ProjectBoard() {
             </button>
           </form>
         </Modal>
+
+        <ConfirmDialog
+          {...confirmDialog}
+          onClose={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
+        />
       </div>
     )
   }
@@ -891,6 +931,11 @@ export default function ProjectBoard() {
           </button>
         </form>
       </Modal>
+
+      <ConfirmDialog
+        {...confirmDialog}
+        onClose={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
+      />
     </div>
   )
 }
