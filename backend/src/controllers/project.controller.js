@@ -2,6 +2,8 @@ import mongoose from "mongoose"
 import Project from "../models/Project.model.js"
 import Task from "../models/Task.model.js"
 import User from "../models/User.model.js"
+import { sendMail } from "../utils/mailer.js"
+import { projectInviteTemplate } from "../utils/emailTemplates.js"
 
 
 // @desc    Create a project workspace
@@ -193,6 +195,18 @@ export const addMember = async (req, res) => {
         })
 
         await project.save()
+
+        // Send invitation email
+        try {
+            await sendMail(
+                targetUser.email,
+                `You've been added to ${project.name}`,
+                projectInviteTemplate(project.name, req.user.name || 'A team manager')
+            )
+        } catch (err) {
+            console.error('Failed to send project invite email:', err)
+            // Non-blocking error, still return success for member addition
+        }
 
         return res.status(201).json({
             message: `${targetUser.name} is now part of the project.`
