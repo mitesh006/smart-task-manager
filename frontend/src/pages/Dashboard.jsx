@@ -39,6 +39,7 @@ export default function Dashboard() {
   const { user } = useAuth()
   const [metrics, setMetrics] = useState(null)
   const [projects, setProjects] = useState([])
+  const [projectMetrics, setProjectMetrics] = useState({})
   const [loading, setLoading] = useState(true)
 
   const containerRef = useRef(null)
@@ -73,6 +74,21 @@ export default function Dashboard() {
           totalTasks: getStatusCount('ToDo') + getStatusCount('In-Progress') + getStatusCount('Done'),
         })
         setProjects(projectsList)
+
+        // Fetch metrics for each project
+        const metricsMap = {}
+        await Promise.all(
+          projectsList.map(async (proj) => {
+            try {
+              const res = await API.get(`/projects/${proj._id}/metrics`)
+              metricsMap[proj._id] = res.data.metrics || res.data
+            } catch (err) {
+              console.error(`Failed to fetch metrics for project ${proj._id}:`, err)
+              metricsMap[proj._id] = null
+            }
+          })
+        )
+        setProjectMetrics(metricsMap)
       } catch (err) {
         console.error('Dashboard fetch error:', err)
       } finally {
@@ -349,6 +365,63 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      {/* Project Metrics Section */}
+      {projects.length > 0 && (
+        <div className="mt-8">
+          <h2 className="text-lg font-heading font-semibold text-mist-100 mb-4">Project Insights</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projects.map((project) => {
+              const metrics = projectMetrics[project._id]
+              return (
+                <Link
+                  key={project._id}
+                  to={`/projects/${project._id}`}
+                  className="glass-card rounded-xl p-5 hover:border-gold/30 transition-all duration-300"
+                  data-hoverable
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <p className="text-sm font-heading font-semibold text-mist-100 truncate">
+                        {project.name}
+                      </p>
+                      <p className="text-xs text-mist-500 mt-1">{project.members?.length || 0} members</p>
+                    </div>
+                    <div className="w-8 h-8 rounded-lg bg-gold/[0.08] border border-gold/15 flex items-center justify-center flex-shrink-0">
+                      <FolderKanban size={14} className="text-gold" />
+                    </div>
+                  </div>
+                  
+                  {metrics ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-mist-400">Tasks:</span>
+                        <span className="text-mist-100 font-semibold">{metrics.totalTasks || 0}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-mist-400">Completed:</span>
+                        <span className="text-emerald font-semibold">{metrics.completedTasks || 0}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-mist-400">In Progress:</span>
+                        <span className="text-sapphire font-semibold">{metrics.inProgressTasks || 0}</span>
+                      </div>
+                      {(metrics.overdueTasks || 0) > 0 && (
+                        <div className="flex items-center justify-between text-xs pt-2 border-t border-mist-800/30">
+                          <span className="text-rose">Overdue:</span>
+                          <span className="text-rose font-semibold">{metrics.overdueTasks}</span>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-mist-500">Loading metrics...</p>
+                  )}
+                </Link>
+              )
+            })}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

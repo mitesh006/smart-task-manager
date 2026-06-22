@@ -287,10 +287,16 @@ export default function ProjectBoard() {
 
   // Modal states
   const [showCreateProject, setShowCreateProject] = useState(false)
+  const [showEditProject, setShowEditProject] = useState(false)
   const [showCreateTask, setShowCreateTask] = useState(false)
   const [showEditTask, setShowEditTask] = useState(false)
   const [showAddMember, setShowAddMember] = useState(false)
+  const [showRoleUpdate, setShowRoleUpdate] = useState(false)
+  const [showTransferOwnership, setShowTransferOwnership] = useState(false)
   const [editingTask, setEditingTask] = useState(null)
+  const [selectedMemberForRole, setSelectedMemberForRole] = useState(null)
+  const [newRole, setNewRole] = useState('Member')
+  const [transferTargetEmail, setTransferTargetEmail] = useState('')
   const [confirmDialog, setConfirmDialog] = useState({
     isOpen: false,
     title: '',
@@ -515,6 +521,60 @@ export default function ProjectBoard() {
     })
   }
 
+  const handleUpdateProject = async (e) => {
+    e.preventDefault()
+    setFormError('')
+    setFormLoading(true)
+    try {
+      await API.put(`/projects/${projectID}`, projectForm)
+      setShowEditProject(false)
+      toast.success('Project updated successfully')
+      fetchProject()
+    } catch (err) {
+      setFormError(err.response?.data?.message || 'Failed to update project')
+    } finally {
+      setFormLoading(false)
+    }
+  }
+
+  const handleUpdateMemberRole = async (e) => {
+    e.preventDefault()
+    setFormError('')
+    setFormLoading(true)
+    try {
+      await API.put(`/projects/${projectID}/members/role`, {
+        targetUserId: selectedMemberForRole._id || selectedMemberForRole.user._id,
+        newRole: newRole
+      })
+      setShowRoleUpdate(false)
+      setSelectedMemberForRole(null)
+      setNewRole('Member')
+      toast.success('Member role updated successfully')
+      fetchProject()
+    } catch (err) {
+      setFormError(err.response?.data?.message || 'Failed to update member role')
+    } finally {
+      setFormLoading(false)
+    }
+  }
+
+  const handleTransferOwnership = async (e) => {
+    e.preventDefault()
+    setFormError('')
+    setFormLoading(true)
+    try {
+      await API.put(`/projects/${projectID}/transfer-ownership`, { newOwnerEmail: transferTargetEmail })
+      setShowTransferOwnership(false)
+      setTransferTargetEmail('')
+      toast.success('Ownership transferred successfully')
+      fetchProject()
+    } catch (err) {
+      setFormError(err.response?.data?.message || 'Failed to transfer ownership')
+    } finally {
+      setFormLoading(false)
+    }
+  }
+
   // ── Drag & Drop handler ──
   const handleTaskDrop = async (taskId, newStatus) => {
     const task = tasks.find((t) => t._id === taskId)
@@ -670,6 +730,36 @@ export default function ProjectBoard() {
 
           <div className="flex items-center gap-3">
             <button
+              onClick={() => {
+                setProjectForm({ name: project.name, description: project.description })
+                setFormError('')
+                setShowEditProject(true)
+              }}
+              className="btn-ghost btn-sm"
+              data-hoverable
+            >
+              <span className="flex items-center gap-2">
+                <Edit3 size={14} />
+                Edit
+              </span>
+            </button>
+            {project.owner?._id === user?._id && (
+              <button
+                onClick={() => {
+                  setTransferTargetEmail('')
+                  setFormError('')
+                  setShowTransferOwnership(true)
+                }}
+                className="btn-ghost btn-sm"
+                data-hoverable
+              >
+                <span className="flex items-center gap-2">
+                  <Users size={14} />
+                  Transfer
+                </span>
+              </button>
+            )}
+            <button
               onClick={() => setShowAddMember(true)}
               className="btn-ghost btn-sm"
               data-hoverable
@@ -708,7 +798,12 @@ export default function ProjectBoard() {
                   </span>
                 </div>
                 <span className="text-[10px] text-mist-300">{m.user?.name || m.name}</span>
-                <span className="text-[8px] text-mist-600">• {m.role}</span>
+                <span className="text-[8px] text-mist-600 cursor-pointer hover:text-gold transition-colors" onClick={() => {
+                  setSelectedMemberForRole(m)
+                  setNewRole(m.role)
+                  setFormError('')
+                  setShowRoleUpdate(true)
+                }}>• {m.role}</span>
                 <button
                   onClick={() => handleRemoveMember(m.user?._id || m._id)}
                   className="opacity-0 group-hover:opacity-100 ml-1 text-mist-600 hover:text-rose transition-all"
@@ -796,6 +891,125 @@ export default function ProjectBoard() {
               data-hoverable
             >
               <span>{formLoading ? 'Adding...' : 'Add Member'}</span>
+            </button>
+          </form>
+        </Modal>
+
+        {/* Edit Project Modal */}
+        <Modal isOpen={showEditProject} onClose={() => setShowEditProject(false)} title="Edit Project">
+          <form onSubmit={handleUpdateProject} className="space-y-4">
+            {formError && (
+              <div className="p-3 rounded-lg bg-rose/[0.06] border border-rose/20 text-rose text-sm">
+                {formError}
+              </div>
+            )}
+            <div>
+              <label className="block text-xs text-mist-400 tracking-wide uppercase mb-1.5 font-heading">
+                Project Name
+              </label>
+              <input
+                className="input-field"
+                value={projectForm.name}
+                onChange={(e) => setProjectForm({ ...projectForm, name: e.target.value })}
+                placeholder="Project name"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-mist-400 tracking-wide uppercase mb-1.5 font-heading">
+                Description
+              </label>
+              <textarea
+                className="input-field resize-none h-24"
+                value={projectForm.description}
+                onChange={(e) => setProjectForm({ ...projectForm, description: e.target.value })}
+                placeholder="Project description"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={formLoading}
+              className="btn-primary w-full disabled:opacity-50"
+              data-hoverable
+            >
+              <span>{formLoading ? 'Updating...' : 'Update Project'}</span>
+            </button>
+          </form>
+        </Modal>
+
+        {/* Update Member Role Modal */}
+        <Modal isOpen={showRoleUpdate} onClose={() => setShowRoleUpdate(false)} title="Update Member Role">
+          <form onSubmit={handleUpdateMemberRole} className="space-y-4">
+            {formError && (
+              <div className="p-3 rounded-lg bg-rose/[0.06] border border-rose/20 text-rose text-sm">
+                {formError}
+              </div>
+            )}
+            {selectedMemberForRole && (
+              <div className="p-3 rounded-lg bg-mist-800/20 border border-mist-700/30">
+                <p className="text-xs text-mist-300">
+                  Updating role for <span className="font-semibold text-mist-100">{selectedMemberForRole.user?.name || selectedMemberForRole.name}</span>
+                </p>
+              </div>
+            )}
+            <div>
+              <label className="block text-xs text-mist-400 tracking-wide uppercase mb-1.5 font-heading">
+                New Role
+              </label>
+              <select
+                className="input-field"
+                value={newRole}
+                onChange={(e) => setNewRole(e.target.value)}
+              >
+                <option value="Member">Member</option>
+                <option value="Manager">Manager</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+            <button
+              type="submit"
+              disabled={formLoading}
+              className="btn-primary w-full disabled:opacity-50"
+              data-hoverable
+            >
+              <span>{formLoading ? 'Updating...' : 'Update Role'}</span>
+            </button>
+          </form>
+        </Modal>
+
+        {/* Transfer Ownership Modal */}
+        <Modal isOpen={showTransferOwnership} onClose={() => setShowTransferOwnership(false)} title="Transfer Project Ownership">
+          <form onSubmit={handleTransferOwnership} className="space-y-4">
+            {formError && (
+              <div className="p-3 rounded-lg bg-rose/[0.06] border border-rose/20 text-rose text-sm">
+                {formError}
+              </div>
+            )}
+            <div className="p-3 rounded-lg bg-gold/[0.06] border border-gold/20">
+              <p className="text-xs text-gold">
+                Warning: You will lose ownership of this project after transfer.
+              </p>
+            </div>
+            <div>
+              <label className="block text-xs text-mist-400 tracking-wide uppercase mb-1.5 font-heading">
+                New Owner Email
+              </label>
+              <input
+                className="input-field"
+                type="email"
+                value={transferTargetEmail}
+                onChange={(e) => setTransferTargetEmail(e.target.value)}
+                placeholder="newowner@company.com"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={formLoading}
+              className="btn-primary w-full disabled:opacity-50"
+              data-hoverable
+            >
+              <span>{formLoading ? 'Transferring...' : 'Transfer Ownership'}</span>
             </button>
           </form>
         </Modal>
