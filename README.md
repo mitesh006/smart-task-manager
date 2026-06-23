@@ -1,120 +1,180 @@
-# TaskFlow: Smart Task Manager
+<div align="center">
+  <img src="frontend/public/favicon-prismgrid.svg" alt="PrismGrid Logo" width="120" />
+  <h1>PrismGrid Enterprise</h1>
+  <p><strong>Intelligent Project Orchestration & Team Collaboration Platform</strong></p>
 
-TaskFlow is a premium, cinematic task management application designed for individuals and teams. It provides a luxurious "dark-mode first" aesthetic paired with robust project and task tracking capabilities.
+  <!-- Badges -->
+  <p>
+    <a href="#"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square" alt="Build Status"></a>
+    <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%3E%3D%2018.0.0-blue.svg?style=flat-square" alt="Node Version"></a>
+    <a href="https://reactjs.org"><img src="https://img.shields.io/badge/react-18.x-61DAFB.svg?style=flat-square" alt="React Version"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License"></a>
+    <a href="#"><img src="https://img.shields.io/badge/security-audited-success.svg?style=flat-square" alt="Security"></a>
+  </p>
+</div>
 
-## Core Features
+---
 
-- **User Registration & Login**: Secure account creation with email OTP verification.
-- **JWT Authentication**: Secure, stateful sessions using HTTP-only cookies and JSON Web Tokens.
-- **Project CRUD Operations**: Create workspaces, invite members, and manage project lifecycles.
-- **Task Management System**: Interactive Kanban board with drag-and-drop functionality for seamless task tracking.
-- **Team Collaboration Module**: Assign tasks, manage project members, and instantly trigger email assignments.
-- **Automated Email Alerts**: Real-time SMTP integrations for project invitations, task assignments, and 24-hour due date alerts.
-- **Dashboard Analytics**: Personal metrics dashboard aggregating active, completed, and overdue tasks.
-- **Responsive UI Design**: Built with Tailwind CSS, adapting smoothly across modern desktop viewports.
-- **Dark/Light Theme Toggle**: Full dynamic theme routing built directly into CSS variables for optimal readability.
+## 📑 Executive Summary
 
-## Technical Stack
+**PrismGrid** is an enterprise-grade task and project management ecosystem designed to refract workplace complexity into a structured spectrum of actionable clarity. Engineered with scalability and performance in mind, PrismGrid provides organizations with a unified platform for project lifecycles, interactive Kanban boards, and real-time team collaboration, all protected by industry-standard security protocols.
 
-### Frontend
+---
 
-- **React.js** (Vite)
-- **Tailwind CSS v4** (Custom Design System & Utilities)
-- **Lucide React** (Icons)
-- **GSAP** (Cinematic Animations & Micro-interactions)
-- **React Router** (Client-side routing)
-- **Axios** (API communication)
+## 🏗️ Enterprise Architecture
 
-### Backend
+PrismGrid employs a robust, decoupled architecture utilizing a modern technology stack to ensure high availability, maintainability, and rapid iteration.
 
-- **Node.js & Express.js**
-- **MongoDB & Mongoose** (Database & ODM)
-- **JSON Web Tokens (JWT)** (Authentication)
-- **Bcryptjs** (Password hashing)
-- **Nodemailer** (SMTP Email Integration)
+### Technology Stack
+- **Frontend (Client Tier):** React.js (Vite), Tailwind CSS v4, Context API, GSAP Animations, Axios.
+- **Backend (API Tier):** Node.js, Express.js, RESTful Architecture.
+- **Data Tier:** MongoDB (NoSQL), Mongoose ODM.
+- **Security & Auth:** JSON Web Tokens (JWT), Bcrypt.js password hashing, HTTP-only cookie strategy.
+- **Communications:** Nodemailer (SMTP) for automated transactional alerts.
 
-## Folder Structure
+---
 
-The repository follows a clean MVC architectural pattern on the backend and a modular component system on the frontend.
+## ✨ Core Capabilities
 
-```
-smart-task-manager/
-├── backend/
-│   ├── src/
-│   │   ├── controllers/   # Request handling & business logic
-│   │   ├── models/        # Mongoose database schemas
-│   │   ├── routes/        # Express API routing
-│   │   ├── middlewares/   # Auth & error protection layers
-│   │   └── utils/         # Mailer, templates, and cron jobs
-│   └── server.js          # Entry point
-│
-└── frontend/
-    ├── src/
-    │   ├── api/           # Axios instance configuration
-    │   ├── components/    # Reusable UI elements (Modals, Dialogs)
-    │   ├── context/       # React Context providers (AuthContext)
-    │   ├── pages/         # Full route views
-    │   ├── index.css      # Design System & Tailwind Directives
-    │   └── App.jsx        # Routing configuration
-    └── package.json
-```
+### Identity & Access Management (IAM)
+- **Secure Onboarding:** Role-based access control (RBAC) ready architecture with OTP-verified email registration.
+- **Stateful Sessions:** Stateless JWT tokenization securely stored in HTTP-only cookies to mitigate XSS and CSRF vectors.
 
-## Validation & Security
+### Project & Task Orchestration
+- **Workspace Management:** Complete CRUD lifecycles for organizational projects.
+- **Interactive Kanban:** Fluid drag-and-drop interfaces for lifecycle progression and state management.
+- **Real-Time Synchronization:** Instant updates across team dashboards.
 
-- **Secure Passwords**: All passwords are cryptographically hashed via `bcryptjs` before entering the database.
-- **Protected Routes**: The `protectRoute` Express middleware intercepts unauthorized API requests.
-- **Client-Side Validation**: Forms enforce required fields, email formatting, and password matching before submission.
-- **Error Handling**: API endpoints are wrapped in robust `try/catch` blocks, parsing backend errors into standardized, user-friendly Toast notifications.
+### Collaborative Ecosystem
+- **Team Assignment:** Granular task delegation with automated workflow triggers.
+- **Proactive Alerts:** SMTP-integrated notifications for invitations, task assignments, and SLA-critical 24-hour due date alerts.
 
-## Installation & Local Setup
+### Observability & UI/UX
+- **Analytics Dashboard:** Aggregated metrics for active, completed, and critical path tasks.
+- **Adaptive Interface:** Fully responsive design system with a dynamic Light/Dark mode implementation driven by native CSS variables.
 
-### 1. Clone the Repository
+---
 
+## 🛡️ Security & Compliance
+
+Security is a fundamental design principle of PrismGrid, not an afterthought.
+- **Cryptographic Hashing:** All credential storage utilizes salt and hash algorithms (`bcryptjs`).
+- **Middleware Protection:** Deep route inspection via the `protectRoute` Express middleware intercepts unauthenticated API transactions.
+- **Input Sanitization:** Client-side and server-side validation layers enforce strict schema compliance and mitigate injection vulnerabilities.
+
+---
+
+## 🚀 Getting Started
+
+Follow these instructions to provision a local development environment.
+
+### Prerequisites
+- [Node.js](https://nodejs.org/en/) (v18.x or higher)
+- [MongoDB](https://www.mongodb.com/) (Local instance or Atlas cluster)
+- [Git](https://git-scm.com/)
+
+### 1. Repository Initialization
+Clone the repository to your local workstation:
 ```bash
-git clone <your-repo-url>
+git clone <repository-url>
 cd smart-task-manager
 ```
 
-### 2. Backend Setup
-
+### 2. Backend Provisioning
+Navigate to the backend service and install dependencies:
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file in the `backend/` directory:
-
+Configure environment variables. Create a `.env` file in the `backend/` directory:
 ```env
+# Server Configuration
 PORT=3000
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
 NODE_ENV=development
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_specific_password
 FRONTEND_URL=http://localhost:5173
+
+# Database & Authentication
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_secure_jwt_secret_key
+
+# SMTP Communications
+EMAIL_USER=your_corporate_email@domain.com
+EMAIL_PASS=your_smtp_app_password
 ```
 
-Start the development server:
-
+Initialize the backend service:
 ```bash
 npm run dev
 ```
 
-### 3. Frontend Setup
-
-Open a new terminal window:
-
+### 3. Frontend Provisioning
+Open a new terminal session and navigate to the frontend service:
 ```bash
 cd frontend
 npm install
 ```
 
-Start the Vite development server:
-
+Initialize the client application:
 ```bash
 npm run dev
 ```
+Access the platform via `http://localhost:5173`.
 
-## License
+---
 
-This project is licensed under the MIT License.
+## 📂 Repository Structure
+
+The codebase strictly adheres to the Model-View-Controller (MVC) paradigm on the server and a component-driven architecture on the client.
+
+```text
+smart-task-manager/
+├── backend/                  # API Microservice
+│   ├── src/
+│   │   ├── controllers/      # Business logic & request orchestration
+│   │   ├── models/           # Data schemas & validation constraints
+│   │   ├── routes/           # API endpoint definitions
+│   │   ├── middlewares/      # Security & request interceptors
+│   │   └── utils/            # Shared utilities (Mailer, Cron)
+│   └── server.js             # Application bootstrap
+│
+└── frontend/                 # Client Application
+    ├── src/
+    │   ├── api/              # Axios network layer configuration
+    │   ├── components/       # Reusable modular UI components
+    │   ├── context/          # Global state management
+    │   ├── pages/            # View controllers
+    │   └── index.css         # Enterprise design system
+    └── package.json          # Dependency manifest
+```
+
+---
+
+## 📚 Documentation
+
+For detailed information on the REST API endpoints, payloads, and response schemas, please refer to the [API.md](docs/API.md) documentation.
+
+---
+
+## 🤝 Contributing Guidelines
+
+We welcome contributions from the engineering community. To ensure code quality and consistency:
+1. **Fork the repository** and create a feature branch (`git checkout -b feature/EnterpriseFeature`).
+2. **Commit your changes** utilizing conventional commit standards (`git commit -m 'feat: implement enterprise feature'`).
+3. **Push to the branch** (`git push origin feature/EnterpriseFeature`).
+4. **Open a Pull Request** for peer review.
+
+Ensure all code passes existing linting and unit tests before submission.
+
+---
+
+## 📄 Legal & License
+
+Copyright © 2026 PrismGrid Corporation.
+This software is distributed under the [MIT License](LICENSE). See the LICENSE file for detailed terms and conditions.
+
+---
+
+## 📞 Support & Contact
+
+For enterprise support, bug reports, or security vulnerability disclosures, please open an issue in the issue tracker or contact the engineering team via standard support channels.

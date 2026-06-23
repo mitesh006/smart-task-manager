@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import prismGridIconLogo from '/favicon-prismgrid.svg'
-import prismGridHorizontalLogo from '/prismgrid-logo-horizontal.svg'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
