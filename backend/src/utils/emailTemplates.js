@@ -7,8 +7,6 @@ const baseStyles = {
   body: 'margin:0; padding:0; background-color:#050508; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;',
   container: 'max-width:560px; margin:0 auto; padding:40px 24px;',
   card: 'background:linear-gradient(135deg, rgba(18,18,24,1) 0%, rgba(12,12,16,1) 100%); border:1px solid rgba(201,165,92,0.12); border-radius:16px; padding:40px 32px;',
-  logo: 'width:36px; height:36px; border:1.5px solid rgba(201,165,92,0.4); border-radius:4px; text-align:center; line-height:36px; display:inline-block; margin-bottom:32px;',
-  logoText: 'color:#c9a55c; font-weight:700; font-size:14px;',
   goldLine: 'height:1px; width:48px; background:linear-gradient(90deg, #c9a55c, transparent); margin:0 0 24px 0; border:none;',
   h1: 'color:#f0eee6; font-size:24px; font-weight:700; margin:0 0 8px 0; letter-spacing:-0.3px;',
   h1Gold: 'color:#c9a55c;',
@@ -37,9 +35,7 @@ export const otpEmailTemplate = (name, otp) => {
   <div style="${baseStyles.container}">
     <div style="${baseStyles.card}">
       <!-- Logo -->
-      <div style="${baseStyles.logo}">
-        <span style="${baseStyles.logoText}">P</span>
-      </div>
+      <img src="${process.env.FRONTEND_URL || 'http://localhost:5173'}/favicon-prismgrid.svg" alt="PrismGrid Logo" width="40" height="40" style="display:inline-block; margin-bottom:28px; border-radius:4px;" />
 
       <!-- Gold accent line -->
       <hr style="${baseStyles.goldLine}" />
@@ -99,9 +95,7 @@ export const welcomeEmailTemplate = (name) => {
   <div style="${baseStyles.container}">
     <div style="${baseStyles.card}">
       <!-- Logo -->
-      <div style="${baseStyles.logo}">
-        <span style="${baseStyles.logoText}">P</span>
-      </div>
+      <img src="${process.env.FRONTEND_URL || 'http://localhost:5173'}/favicon-prismgrid.svg" alt="PrismGrid Logo" width="40" height="40" style="display:inline-block; margin-bottom:28px; border-radius:4px;" />
 
       <!-- Gold accent line -->
       <hr style="${baseStyles.goldLine}" />
@@ -209,9 +203,7 @@ export const projectInviteTemplate = (projectName, managerName) => {
   <div style="${baseStyles.container}">
     <div style="${baseStyles.card}">
       <!-- Logo -->
-      <div style="${baseStyles.logo}">
-        <span style="${baseStyles.logoText}">P</span>
-      </div>
+      <img src="${process.env.FRONTEND_URL || 'http://localhost:5173'}/favicon-prismgrid.svg" alt="PrismGrid Logo" width="40" height="40" style="display:inline-block; margin-bottom:28px; border-radius:4px;" />
 
       <!-- Gold accent line -->
       <hr style="${baseStyles.goldLine}" />
@@ -277,9 +269,7 @@ export const taskAssignmentTemplate = (taskTitle, projectName, dueDate) => {
   <div style="${baseStyles.container}">
     <div style="${baseStyles.card}">
       <!-- Logo -->
-      <div style="${baseStyles.logo}">
-        <span style="${baseStyles.logoText}">P</span>
-      </div>
+      <img src="${process.env.FRONTEND_URL || 'http://localhost:5173'}/favicon-prismgrid.svg" alt="PrismGrid Logo" width="40" height="40" style="display:inline-block; margin-bottom:28px; border-radius:4px;" />
 
       <!-- Gold accent line -->
       <hr style="${baseStyles.goldLine}" />
@@ -355,9 +345,7 @@ export const dueDateAlertTemplate = (taskTitle, projectName, dueDate) => {
     <div style="${baseStyles.card}">
       
       <!-- Top Accent / Logo area -->
-      <div style="${baseStyles.logo}">
-        <span style="${baseStyles.logoText}">P</span>
-      </div>
+      <img src="${process.env.FRONTEND_URL || 'http://localhost:5173'}/favicon-prismgrid.svg" alt="PrismGrid Logo" width="40" height="40" style="display:inline-block; margin-bottom:28px; border-radius:4px;" />
       <hr style="height:1px; width:48px; background:linear-gradient(90deg, #f43f5e, transparent); margin:0 0 24px 0; border:none;" />
 
       <!-- Main Content -->
