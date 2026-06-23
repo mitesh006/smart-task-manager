@@ -1,7 +1,7 @@
 <div align="center">
   <img src="frontend/public/favicon-prismgrid.svg" alt="PrismGrid Logo" width="120" />
-  <h1>PrismGrid Enterprise</h1>
-  <p><strong>Intelligent Project Orchestration & Team Collaboration Platform</strong></p>
+  <h1>PrismGrid</h1>
+  <p><strong>A Full-Stack Task & Project Management App (Internship Project)</strong></p>
 
   <!-- Badges -->
   <p>
@@ -9,172 +9,162 @@
     <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%3E%3D%2018.0.0-blue.svg?style=flat-square" alt="Node Version"></a>
     <a href="https://reactjs.org"><img src="https://img.shields.io/badge/react-18.x-61DAFB.svg?style=flat-square" alt="React Version"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License"></a>
-    <a href="#"><img src="https://img.shields.io/badge/security-audited-success.svg?style=flat-square" alt="Security"></a>
   </p>
 </div>
 
 ---
 
-## 📑 Executive Summary
+## 📑 About This Project
 
-**PrismGrid** is an enterprise-grade task and project management ecosystem designed to refract workplace complexity into a structured spectrum of actionable clarity. Engineered with scalability and performance in mind, PrismGrid provides organizations with a unified platform for project lifecycles, interactive Kanban boards, and real-time team collaboration, all protected by industry-standard security protocols.
+**PrismGrid** is a full-stack task and project management application I developed from scratch during my internship. The goal of this project was to build a unified platform for tracking project lifecycles, managing interactive Kanban boards, and facilitating team collaboration while learning modern web development practices.
 
 ---
 
-## 🏗️ Enterprise Architecture
+## 🏗️ Architecture & Tech Stack
 
-PrismGrid employs a robust, decoupled architecture utilizing a modern technology stack to ensure high availability, maintainability, and rapid iteration.
+I built PrismGrid using a decoupled architecture with a modern JavaScript stack to ensure a responsive UI and a robust backend API.
 
 ### Technology Stack
-- **Frontend (Client Tier):** React.js (Vite), Tailwind CSS v4, Context API, GSAP Animations, Axios.
-- **Backend (API Tier):** Node.js, Express.js, RESTful Architecture.
-- **Data Tier:** MongoDB (NoSQL), Mongoose ODM.
-- **Security & Auth:** JSON Web Tokens (JWT), Bcrypt.js password hashing, HTTP-only cookie strategy.
-- **Communications:** Nodemailer (SMTP) for automated transactional alerts.
+- **Frontend:** React.js (Vite), Tailwind CSS v4, Context API, GSAP Animations, Axios.
+- **Backend:** Node.js, Express.js, RESTful API Design.
+- **Database:** MongoDB (NoSQL), Mongoose ODM.
+- **Security & Auth:** JSON Web Tokens (JWT), Bcrypt.js for password hashing, HTTP-only cookies.
+- **Communications:** Brevo API for automated email alerts.
 
 ---
 
-## ✨ Core Capabilities
+## ✨ Key Features Developed
 
-### Identity & Access Management (IAM)
-- **Secure Onboarding:** Role-based access control (RBAC) ready architecture with OTP-verified email registration.
-- **Stateful Sessions:** Stateless JWT tokenization securely stored in HTTP-only cookies to mitigate XSS and CSRF vectors.
+### Authentication & Authorization
+- **Secure Onboarding:** User registration with OTP-verified email.
+- **Stateful Sessions:** Implemented secure, stateless JWT tokenization using HTTP-only cookies to protect against XSS attacks.
 
-### Project & Task Orchestration
-- **Workspace Management:** Complete CRUD lifecycles for organizational projects.
-- **Interactive Kanban:** Fluid drag-and-drop interfaces for lifecycle progression and state management.
-- **Real-Time Synchronization:** Instant updates across team dashboards.
+### Project & Task Management
+- **Workspace Management:** Complete CRUD operations for projects.
+- **Interactive Kanban:** Drag-and-drop interfaces for task progression and state management.
 
-### Collaborative Ecosystem
-- **Team Assignment:** Granular task delegation with automated workflow triggers.
-- **Proactive Alerts:** SMTP-integrated notifications for invitations, task assignments, and SLA-critical 24-hour due date alerts.
+### Team Collaboration
+- **Task Assignment:** Ability to delegate tasks to team members.
+- **Email Notifications:** Automated email alerts for invitations and task assignments.
 
-### Observability & UI/UX
-- **Analytics Dashboard:** Aggregated metrics for active, completed, and critical path tasks.
-- **Adaptive Interface:** Fully responsive design system with a dynamic Light/Dark mode implementation driven by native CSS variables.
-
----
-
-## 🛡️ Security & Compliance
-
-Security is a fundamental design principle of PrismGrid, not an afterthought.
-- **Cryptographic Hashing:** All credential storage utilizes salt and hash algorithms (`bcryptjs`).
-- **Middleware Protection:** Deep route inspection via the `protectRoute` Express middleware intercepts unauthenticated API transactions.
-- **Input Sanitization:** Client-side and server-side validation layers enforce strict schema compliance and mitigate injection vulnerabilities.
+### UI / UX
+- **Analytics Dashboard:** Visual metrics for active and completed tasks.
+- **Responsive Design:** Fully responsive UI with a dynamic Light/Dark mode toggle.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 How to Run Locally
 
-Follow these instructions to provision a local development environment.
+If you'd like to test out the project locally, follow these steps:
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/en/) (v18.x or higher)
 - [MongoDB](https://www.mongodb.com/) (Local instance or Atlas cluster)
 - [Git](https://git-scm.com/)
 
-### 1. Repository Initialization
-Clone the repository to your local workstation:
+### 1. Clone the Repository
 ```bash
 git clone <repository-url>
 cd smart-task-manager
 ```
 
-### 2. Backend Provisioning
-Navigate to the backend service and install dependencies:
+### 2. Backend Setup
+Navigate to the backend folder and install dependencies:
 ```bash
 cd backend
 npm install
 ```
 
-Configure environment variables. Create a `.env` file in the `backend/` directory:
+Create a `.env` file in the `backend/` directory:
 ```env
 # Server Configuration
 PORT=3000
-NODE_ENV=development
 FRONTEND_URL=http://localhost:5173
 
 # Database & Authentication
-MONGODB_URI=your_mongodb_connection_string
+MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secure_jwt_secret_key
 
-# SMTP Communications
-EMAIL_USER=your_corporate_email@domain.com
-EMAIL_PASS=your_smtp_app_password
+# Brevo API Communications
+BREVO_API_KEY=your_brevo_api_key
+BREVO_FROM='your_email@domain.com'
 ```
 
-Initialize the backend service:
+Start the backend server:
 ```bash
 npm run dev
 ```
 
-### 3. Frontend Provisioning
-Open a new terminal session and navigate to the frontend service:
+### 3. Frontend Setup
+Open a new terminal, navigate to the frontend folder, and install dependencies:
 ```bash
 cd frontend
 npm install
 ```
 
-Initialize the client application:
+Create a `.env` file in the `frontend/` directory:
+```env
+VITE_BASE_API_URL=http://localhost:3000/api
+```
+
+Start the frontend development server:
 ```bash
 npm run dev
 ```
-Access the platform via `http://localhost:5173`.
+You can now view the app in your browser at `http://localhost:5173`.
 
 ---
 
-## 📂 Repository Structure
-
-The codebase strictly adheres to the Model-View-Controller (MVC) paradigm on the server and a component-driven architecture on the client.
+## 📂 Project Structure
 
 ```text
 smart-task-manager/
-├── backend/                  # API Microservice
+├── backend/                  # Node.js API
 │   ├── src/
-│   │   ├── controllers/      # Business logic & request orchestration
-│   │   ├── models/           # Data schemas & validation constraints
-│   │   ├── routes/           # API endpoint definitions
-│   │   ├── middlewares/      # Security & request interceptors
-│   │   └── utils/            # Shared utilities (Mailer, Cron)
-│   └── server.js             # Application bootstrap
+│   │   ├── config/           # Configuration files
+│   │   ├── controllers/      # API logic
+│   │   ├── middlewares/      # Express middlewares (Auth, etc.)
+│   │   ├── models/           # Mongoose schemas
+│   │   ├── routes/           # Express routes
+│   │   ├── utils/            # Helper functions
+│   │   └── app.js            # Express app setup
+│   └── server.js             # Entry point
 │
-└── frontend/                 # Client Application
+└── frontend/                 # React App
     ├── src/
-    │   ├── api/              # Axios network layer configuration
-    │   ├── components/       # Reusable modular UI components
-    │   ├── context/          # Global state management
-    │   ├── pages/            # View controllers
-    │   └── index.css         # Enterprise design system
-    └── package.json          # Dependency manifest
+    │   ├── api/              # Axios configuration
+    │   ├── assets/           # Images, icons, etc.
+    │   ├── components/       # Reusable React components
+    │   ├── context/          # React context providers
+    │   ├── pages/            # Main application views
+    │   ├── utils/            # Helper functions
+    │   ├── App.jsx           # Root component
+    │   ├── main.jsx          # React entry point
+    │   └── index.css         # Global styles & Tailwind config
+    └── package.json          # Dependencies
 ```
 
 ---
 
-## 📚 Documentation
+## 📚 API Documentation
 
-For detailed information on the REST API endpoints, payloads, and response schemas, please refer to the [API.md](docs/API.md) documentation.
-
----
-
-## 🤝 Contributing Guidelines
-
-We welcome contributions from the engineering community. To ensure code quality and consistency:
-1. **Fork the repository** and create a feature branch (`git checkout -b feature/EnterpriseFeature`).
-2. **Commit your changes** utilizing conventional commit standards (`git commit -m 'feat: implement enterprise feature'`).
-3. **Push to the branch** (`git push origin feature/EnterpriseFeature`).
-4. **Open a Pull Request** for peer review.
-
-Ensure all code passes existing linting and unit tests before submission.
+For detailed information on the REST API endpoints I created, please refer to the [API.md](docs/API.md) file.
 
 ---
 
-## 📄 Legal & License
+## 💡 What I Learned
 
-Copyright © 2026 PrismGrid Corporation.
-This software is distributed under the [MIT License](LICENSE). See the LICENSE file for detailed terms and conditions.
+Building this project taught me a lot about:
+- Designing and implementing RESTful APIs from scratch.
+- Handling secure user authentication using JWT and HTTP-only cookies.
+- Managing complex state in React and creating interactive UI components (like drag-and-drop Kanban boards).
+- Integrating third-party APIs (Brevo for emails).
+- Structuring a full-stack project for maintainability.
 
 ---
 
-## 📞 Support & Contact
+## 📄 License & Contact
 
-For enterprise support, bug reports, or security vulnerability disclosures, please open an issue in the issue tracker or contact the engineering team via standard support channels.
+This project was built during an internship and is available under the [MIT License](LICENSE).
+
+Feel free to reach out if you have any questions about this project or my implementation approach!
