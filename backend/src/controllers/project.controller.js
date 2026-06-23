@@ -267,7 +267,7 @@ export const updateProject = async (req, res) => {
         const updatedProject = await Project.findByIdAndUpdate(
             projectId,
             { $set: req.body },
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         )
 
         return res.status(200).json({

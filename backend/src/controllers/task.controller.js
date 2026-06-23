@@ -164,7 +164,7 @@ export const updateTask = async (req, res) => {
         const updatedTask = await Task.findByIdAndUpdate(
             taskId,
             { $set: req.body },
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         )
 
         // Send email if newly assigned to someone else

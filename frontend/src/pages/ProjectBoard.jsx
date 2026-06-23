@@ -543,7 +543,7 @@ export default function ProjectBoard() {
     setFormLoading(true)
     try {
       await API.put(`/projects/${projectID}/members/role`, {
-        targetUserId: selectedMemberForRole._id || selectedMemberForRole.user._id,
+        targetUserId: selectedMemberForRole.user?._id || selectedMemberForRole._id,
         newRole: newRole
       })
       setShowRoleUpdate(false)
@@ -961,9 +961,9 @@ export default function ProjectBoard() {
                 value={newRole}
                 onChange={(e) => setNewRole(e.target.value)}
               >
-                <option value="Member">Member</option>
+                <option value="Developer">Developer</option>
                 <option value="Manager">Manager</option>
-                <option value="Admin">Admin</option>
+                <option value="Viewer">Viewer</option>
               </select>
             </div>
             <button
