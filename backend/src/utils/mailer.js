@@ -16,7 +16,7 @@ export const sendMail = async (to, subject, html) => {
       subject: subject,
       htmlContent: html,
       sender: {
-        name: 'Task Flow',
+        name: 'PrismGrid',
         email: process.env.BREVO_FROM
       },
       to: [{email: to}],

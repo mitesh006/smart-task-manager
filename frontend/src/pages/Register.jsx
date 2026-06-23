@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import API from '../api/client'
 import gsap from 'gsap'
 import { ArrowRight, Mail, Lock, User, Eye, EyeOff, ShieldCheck, ArrowLeft, RefreshCw } from 'lucide-react'
+import prismGridIconLogo from '/favicon-prismgrid.svg'
 
 export default function Register() {
   // ── Step state ──
@@ -197,11 +198,13 @@ export default function Register() {
         <div ref={formRef} className="w-full max-w-md opacity-0">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 mb-12 group">
-            <div className="w-8 h-8 rounded-sm border border-gold/40 flex items-center justify-center group-hover:border-gold transition-colors duration-500">
-              <span className="text-gold font-heading font-bold text-sm">T</span>
-            </div>
+            <img 
+              src={prismGridIconLogo} 
+              alt="PrismGrid" 
+              className="w-8 h-8 group-hover:opacity-80 transition-opacity duration-500" 
+            />
             <span className="text-lg font-heading font-semibold tracking-wide text-mist-100">
-              TASKFLOW
+              PRISMGRID
             </span>
           </Link>
 
@@ -438,7 +441,7 @@ export default function Register() {
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(225deg, rgba(10,10,15,1) 0%, rgba(5,5,8,0.95) 50%, rgba(201,165,92,0.08) 100%)',
+              'linear-gradient(225deg, var(--color-obsidian) 0%, var(--color-void) 50%, rgba(201,165,92,0.08) 100%)',
           }}
         />
         <div

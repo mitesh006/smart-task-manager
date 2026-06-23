@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import prismGridLogo from '/prism-grid-logo.svg'
 
 export default function LoadingScreen({ onComplete }) {
   const containerRef = useRef(null)
@@ -52,7 +53,7 @@ export default function LoadingScreen({ onComplete }) {
     return () => tl.kill()
   }, [onComplete])
 
-  const letters = 'TASKFLOW'.split('')
+  const letters = 'PRISMGRID'.split('')
 
   return (
     <div
@@ -68,6 +69,15 @@ export default function LoadingScreen({ onComplete }) {
           backgroundSize: '60px 60px',
         }}
       />
+
+      {/* Square logo */}
+      <div className="mb-8 opacity-70">
+        <img 
+          src={prismGridLogo} 
+          alt="Loading" 
+          className="w-20 h-20 object-contain"
+        />
+      </div>
 
       {/* Main title */}
       <div className="relative flex items-center gap-[2px]" style={{ perspective: '600px' }}>

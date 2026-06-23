@@ -1,0 +1,37 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c9a55c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8a7a45;stop-opacity:1" />
+    </linearGradient>
+    <filter id="faviconGlow">
+      <feGaussianBlur stdDeviation="0.8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="32" height="32" fill="transparent" rx="4"/>
+  
+  <!-- Grid lines -->
+  <g stroke="#c9a55c" stroke-width="0.5" opacity="0.25">
+    <line x1="8" y1="2" x2="8" y2="30" />
+    <line x1="16" y1="2" x2="16" y2="30" />
+    <line x1="24" y1="2" x2="24" y2="30" />
+    <line x1="2" y1="8" x2="30" y2="8" />
+    <line x1="2" y1="16" x2="30" y2="16" />
+    <line x1="2" y1="24" x2="30" y2="24" />
+  </g>
+
+  <!-- Central prismatic diamond -->
+  <polygon points="16,8 22,16 16,24 10,16" fill="url(#faviconGradient)" opacity="0.95" filter="url(#faviconGlow)"/>
+  
+  <!-- Corner accents -->
+  <circle cx="6" cy="6" r="1.5" fill="#c9a55c" opacity="0.5"/>
+  <circle cx="26" cy="6" r="1.5" fill="#c9a55c" opacity="0.5"/>
+  <circle cx="6" cy="26" r="1.5" fill="#c9a55c" opacity="0.5"/>
+  <circle cx="26" cy="26" r="1.5" fill="#c9a55c" opacity="0.5"/>
+</svg>

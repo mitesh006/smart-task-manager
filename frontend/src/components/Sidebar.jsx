@@ -10,6 +10,7 @@ import {
   ChevronRight,
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import prismGridIconLogo from '/favicon-prismgrid.svg'
 
 const navItems = [
   { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -39,15 +40,17 @@ export default function Sidebar() {
     >
       {/* Logo */}
       <div className="h-16 flex items-center px-5 border-b border-mist-800/30">
-        <div className="w-8 h-8 rounded-sm border border-gold/40 flex items-center justify-center flex-shrink-0">
-          <span className="text-gold font-heading font-bold text-sm">T</span>
-        </div>
+        <img 
+          src={prismGridIconLogo}
+          alt="PrismGrid"
+          className="w-8 h-8 flex-shrink-0"
+        />
         <span
           className={`ml-3 font-heading font-semibold text-sm tracking-[0.15em] text-mist-100 transition-all duration-500 ${
             expanded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'
           }`}
         >
-          TASKFLOW
+          PRISMGRID
         </span>
       </div>
 

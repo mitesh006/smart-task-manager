@@ -52,7 +52,7 @@ export const sendOtp = async (req, res) => {
         // Send OTP email
         await sendMail(
             email,
-            'Your TaskFlow verification code',
+            'Your PrismGrid verification code',
             otpEmailTemplate(name, otpCode)
         )
 
@@ -128,7 +128,7 @@ export const verifyOtpAndRegister = async (req, res) => {
         // Send welcome email (fire and forget)
         sendMail(
             email,
-            'Welcome to TaskFlow!',
+            'Welcome to PrismGrid!',
             welcomeEmailTemplate(otpRecord.name)
         ).catch((err) => console.error('Welcome email error:', err))
 

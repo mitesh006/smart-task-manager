@@ -1,5 +1,5 @@
 /**
- * Styled HTML email templates matching TaskFlow's dark luxury gold aesthetic.
+ * Styled HTML email templates matching PrismGrid's dark luxury gold aesthetic.
  * All emails are inline-styled for maximum email client compatibility.
  */
 
@@ -38,7 +38,7 @@ export const otpEmailTemplate = (name, otp) => {
     <div style="${baseStyles.card}">
       <!-- Logo -->
       <div style="${baseStyles.logo}">
-        <span style="${baseStyles.logoText}">T</span>
+        <span style="${baseStyles.logoText}">P</span>
       </div>
 
       <!-- Gold accent line -->
@@ -49,7 +49,7 @@ export const otpEmailTemplate = (name, otp) => {
         Verify your <span style="${baseStyles.h1Gold}">email</span>
       </h1>
       <p style="${baseStyles.subtitle}">
-        Hi ${name}, use the code below to verify your email address and complete your TaskFlow registration.
+        Hi ${name}, use the code below to verify your email address and complete your PrismGrid registration.
       </p>
 
       <!-- OTP Code -->
@@ -71,14 +71,14 @@ export const otpEmailTemplate = (name, otp) => {
 
       <!-- Footer inside card -->
       <p style="color:#4a4a5a; font-size:10px; text-align:center; margin:0; letter-spacing:0.3px; text-transform:uppercase;">
-        TaskFlow — Smart Team Management
+        PrismGrid — Smart Team Management
       </p>
     </div>
 
     <!-- Outer footer -->
     <div style="${baseStyles.footer}">
       <p style="${baseStyles.footerText}">
-        © ${new Date().getFullYear()} TaskFlow. Engineered for excellence.
+        © ${new Date().getFullYear()} PrismGrid. Engineered for excellence.
       </p>
     </div>
   </div>
@@ -100,7 +100,7 @@ export const welcomeEmailTemplate = (name) => {
     <div style="${baseStyles.card}">
       <!-- Logo -->
       <div style="${baseStyles.logo}">
-        <span style="${baseStyles.logoText}">T</span>
+        <span style="${baseStyles.logoText}">P</span>
       </div>
 
       <!-- Gold accent line -->
@@ -108,7 +108,7 @@ export const welcomeEmailTemplate = (name) => {
 
       <!-- Heading -->
       <h1 style="${baseStyles.h1}">
-        Welcome to <span style="${baseStyles.h1Gold}">TaskFlow</span>
+        Welcome to <span style="${baseStyles.h1Gold}}">PrismGrid</span>
       </h1>
       <p style="${baseStyles.subtitle}">
         Hi ${name}, your account is now active. You're ready to orchestrate your team's potential with intelligent project management.
@@ -172,7 +172,7 @@ export const welcomeEmailTemplate = (name) => {
         <tr>
           <td style="background:linear-gradient(135deg, #c9a55c 0%, #a8884a 100%); border-radius:8px; padding:12px 32px;">
             <a href="${process.env.FRONTEND_URL || 'http://localhost:5173'}/login" style="color:#050508; text-decoration:none; font-size:13px; font-weight:600; letter-spacing:0.5px; display:inline-block;">
-              Open TaskFlow →
+              Open PrismGrid →
             </a>
           </td>
         </tr>
@@ -182,14 +182,14 @@ export const welcomeEmailTemplate = (name) => {
 
       <!-- Footer inside card -->
       <p style="color:#4a4a5a; font-size:10px; text-align:center; margin:0; letter-spacing:0.3px; text-transform:uppercase;">
-        TaskFlow — Smart Team Management
+        PrismGrid — Smart Team Management
       </p>
     </div>
 
     <!-- Outer footer -->
     <div style="${baseStyles.footer}">
       <p style="${baseStyles.footerText}">
-        © ${new Date().getFullYear()} TaskFlow. Engineered for excellence.
+        © ${new Date().getFullYear()} PrismGrid. Engineered for excellence.
       </p>
     </div>
   </div>
@@ -210,7 +210,7 @@ export const projectInviteTemplate = (projectName, managerName) => {
     <div style="${baseStyles.card}">
       <!-- Logo -->
       <div style="${baseStyles.logo}">
-        <span style="${baseStyles.logoText}">T</span>
+        <span style="${baseStyles.logoText}">P</span>
       </div>
 
       <!-- Gold accent line -->
@@ -248,14 +248,14 @@ export const projectInviteTemplate = (projectName, managerName) => {
 
       <!-- Footer inside card -->
       <p style="color:#4a4a5a; font-size:10px; text-align:center; margin:0; letter-spacing:0.3px; text-transform:uppercase;">
-        TaskFlow — Smart Team Management
+        PrismGrid — Smart Team Management
       </p>
     </div>
 
     <!-- Outer footer -->
     <div style="${baseStyles.footer}">
       <p style="${baseStyles.footerText}">
-        © ${new Date().getFullYear()} TaskFlow. Engineered for excellence.
+        © ${new Date().getFullYear()} PrismGrid. Engineered for excellence.
       </p>
     </div>
   </div>
@@ -278,7 +278,7 @@ export const taskAssignmentTemplate = (taskTitle, projectName, dueDate) => {
     <div style="${baseStyles.card}">
       <!-- Logo -->
       <div style="${baseStyles.logo}">
-        <span style="${baseStyles.logoText}">T</span>
+        <span style="${baseStyles.logoText}">P</span>
       </div>
 
       <!-- Gold accent line -->
@@ -286,10 +286,10 @@ export const taskAssignmentTemplate = (taskTitle, projectName, dueDate) => {
 
       <!-- Heading -->
       <h1 style="${baseStyles.h1}">
-        New Task <span style="${baseStyles.h1Gold}">Assigned</span>
+        New Task <span style="${baseStyles.h1Gold}}">Assigned</span>
       </h1>
       <p style="${baseStyles.subtitle}">
-        A new task has been assigned to you in TaskFlow.
+        A new task has been assigned to you in PrismGrid.
       </p>
 
       <!-- Details -->
@@ -326,14 +326,14 @@ export const taskAssignmentTemplate = (taskTitle, projectName, dueDate) => {
 
       <!-- Footer inside card -->
       <p style="color:#4a4a5a; font-size:10px; text-align:center; margin:0; letter-spacing:0.3px; text-transform:uppercase;">
-        TaskFlow — Smart Team Management
+        PrismGrid — Smart Team Management
       </p>
     </div>
 
     <!-- Outer footer -->
     <div style="${baseStyles.footer}">
       <p style="${baseStyles.footerText}">
-        © ${new Date().getFullYear()} TaskFlow. Engineered for excellence.
+        © ${new Date().getFullYear()} PrismGrid. Engineered for excellence.
       </p>
     </div>
   </div>
@@ -356,7 +356,7 @@ export const dueDateAlertTemplate = (taskTitle, projectName, dueDate) => {
       
       <!-- Top Accent / Logo area -->
       <div style="${baseStyles.logo}">
-        <span style="${baseStyles.logoText}">T</span>
+        <span style="${baseStyles.logoText}">P</span>
       </div>
       <hr style="height:1px; width:48px; background:linear-gradient(90deg, #f43f5e, transparent); margin:0 0 24px 0; border:none;" />
 
@@ -375,7 +375,7 @@ export const dueDateAlertTemplate = (taskTitle, projectName, dueDate) => {
       </div>
 
       <p style="color:#8a8a99; font-size:14px; margin:0 0 32px 0; line-height:1.6;">
-        Please log in to TaskFlow to complete this task or update its status.
+        Please log in to PrismGrid to complete this task or update its status.
       </p>
 
       <!-- CTA Button -->
@@ -387,14 +387,14 @@ export const dueDateAlertTemplate = (taskTitle, projectName, dueDate) => {
 
       <!-- Footer Context -->
       <p style="color:#4a4a5a; font-size:12px; margin:0; line-height:1.5;">
-        This is an automated alert generated by the TaskFlow system.
+        This is an automated alert generated by the PrismGrid system.
       </p>
     </div>
 
     <!-- Outer footer -->
     <div style="${baseStyles.footer}">
       <p style="${baseStyles.footerText}">
-        © ${new Date().getFullYear()} TaskFlow. Engineered for excellence.
+        © ${new Date().getFullYear()} PrismGrid. Engineered for excellence.
       </p>
     </div>
   </div>
