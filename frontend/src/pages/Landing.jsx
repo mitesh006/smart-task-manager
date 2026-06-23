@@ -1,9 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 import Navbar from '../components/Navbar'
+import prismGridIconLogo from '/favicon-prismgrid.svg'
+import prismGridLogo from '/prism-grid-logo.svg'
+import API from '../api/client'
 import {
   ArrowRight,
   Layers,
@@ -28,6 +31,30 @@ export default function Landing() {
   const statNumbersRef = useRef([])
   const ctaSectionRef = useRef(null)
   const parallaxBgRef = useRef(null)
+  
+  const [stats, setStats] = useState([
+    { number: 127, suffix: '+', label: 'Projects Managed' },
+    { number: 892, suffix: '+', label: 'Tasks Completed' },
+    { number: 34, suffix: '+', label: 'Teams Active' },
+    { number: 99, suffix: '%', label: 'Uptime Record' },
+  ])
+
+  useEffect(() => {
+    // Fetch stats from backend
+    const fetchStats = async () => {
+      try {
+        const response = await API.get('/stats')
+        if (response.data?.stats) {
+          setStats(response.data.stats)
+        }
+      } catch (error) {
+        // Use default stats if API call fails
+        console.log('Using default stats', error.message)
+      }
+    }
+    
+    fetchStats()
+  }, [])
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -148,9 +175,10 @@ export default function Landing() {
     })
 
     // Animate stat numbers
-    statNumbersRef.current.forEach((el) => {
-      if (!el) return
-      const target = parseInt(el.dataset.target, 10)
+    statNumbersRef.current.forEach((el, index) => {
+      if (!el || !stats[index]) return
+      const target = stats[index].number
+      el.dataset.target = target
       gsap.fromTo(
         { val: 0 },
         { val: target },
@@ -193,7 +221,7 @@ export default function Landing() {
       lenis.destroy()
       ScrollTrigger.getAll().forEach((t) => t.kill())
     }
-  }, [])
+  }, [stats])
 
   const features = [
     {
@@ -226,13 +254,6 @@ export default function Landing() {
       title: 'Lightning Performance',
       desc: 'Built on modern React architecture with optimized rendering. Every interaction feels instant, every transition feels effortless.',
     },
-  ]
-
-  const stats = [
-    { number: 2847, suffix: '+', label: 'Projects Managed' },
-    { number: 18500, suffix: '+', label: 'Tasks Completed' },
-    { number: 640, suffix: '+', label: 'Teams Active' },
-    { number: 99, suffix: '%', label: 'Uptime Record' },
   ]
 
   return (
@@ -450,7 +471,7 @@ export default function Landing() {
             <span className="text-gradient-gold">better management</span>
           </h2>
           <p className="mt-6 text-mist-400 font-light max-w-xl mx-auto leading-relaxed">
-            Join hundreds of teams already using TaskFlow to ship faster, collaborate smarter,
+            Join hundreds of teams already using PrismGrid to ship faster, collaborate smarter,
             and manage projects with unparalleled clarity.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -473,24 +494,16 @@ export default function Landing() {
       <footer className="border-t border-mist-800/30 py-10">
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded-sm border border-gold/30 flex items-center justify-center">
-              <span className="text-gold font-heading font-bold text-[10px]">T</span>
-            </div>
+            <img 
+              src={prismGridIconLogo} 
+              alt="PrismGrid" 
+              className="w-6 h-6 opacity-70" 
+            />
             <span className="text-xs text-mist-500 tracking-wide">
-              © 2026 TaskFlow. Engineered for excellence.
+              © 2026 PrismGrid. Engineered for excellence.
             </span>
           </div>
-          <div className="flex items-center gap-6">
-            <a href="#" className="text-xs text-mist-500 hover:text-mist-300 transition-colors duration-300" data-hoverable>
-              Privacy
-            </a>
-            <a href="#" className="text-xs text-mist-500 hover:text-mist-300 transition-colors duration-300" data-hoverable>
-              Terms
-            </a>
-            <a href="#" className="text-xs text-mist-500 hover:text-mist-300 transition-colors duration-300" data-hoverable>
-              Contact
-            </a>
-          </div>
+          
         </div>
       </footer>
     </div>
